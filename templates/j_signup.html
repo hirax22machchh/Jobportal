@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8">
+    <title> J_SIGNUP </title>
+    <link rel="stylesheet" href="style.css">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+   <style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins',sans-serif;
+      }
+      body{
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        background: linear-gradient(135deg, #71b7e6, #9b59b6);
+      }
+      .container{
+        max-width: 700px;
+        width: 100%;
+        background-color: #E7E9EE;
+        padding: 25px 30px;
+        border-radius: 5px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.15);
+      }
+      .container .title{
+        font-size: 25px;
+        font-weight: 500;
+        position: relative;
+        color:blue;
+      }
+      .container .title::before{
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        height: 3px;
+        width: 30px;
+        border-radius: 5px;
+        background: linear-gradient(135deg, #71b7e6, #9b59b6);
+      }
+      .content form .user-details{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin: 20px 0 12px 0;
+      }
+      form .user-details .input-box{
+        margin-bottom: 15px;
+        width: calc(100% / 2 - 20px);
+      }
+      form .input-box span.details{
+        display: block;
+        font-weight: 500;
+        margin-bottom: 5px;
+      }
+      .user-details .input-box input{
+        height: 45px;
+        width: 100%;
+        outline: none;
+        font-size: 16px;
+        border-radius: 5px;
+        padding-left: 15px;
+        border: 1px solid #ccc;
+        border-bottom-width: 2px;
+        transition: all 0.3s ease;
+      }
+      .user-details .input-box input:focus,
+      .user-details .input-box input:valid{
+        border-color: #9b59b6;
+      }
+       form .gender-details .gender-title{
+        font-size: 20px;
+        font-weight: 500;
+       }
+       form .category{
+         display: flex;
+         width: 80%;
+         margin: 14px 0 ;
+         justify-content: space-between;
+       }
+       form .category label{
+         display: flex;
+         align-items: center;
+         cursor: pointer;
+       }
+       form .category label .dot{
+        height: 18px;
+        width: 18px;
+        border-radius: 50%;
+        margin-right: 10px;
+        background: #d9d9d9;
+        border: 5px solid transparent;
+        transition: all 0.3s ease;
+      }
+       #dot-1:checked ~ .category label .one,
+       #dot-2:checked ~ .category label .two,
+       #dot-3:checked ~ .category label .three{
+         background: #9b59b6;
+         border-color: #d9d9d9;
+       }
+       form input[type="radio"]{
+         display: none;
+       }
+       form input[type="file"]{
+        border: 1px solid #ccc;
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+        background-color: transparent; /* Set background color to transparent */
+        border-radius: 4px;
+        color: #333;
+       }
+
+       form input[type="file"]:hover{
+        background-color: #e9e9e9;
+       }
+       
+       form input[type="text"]:hover{
+        background-color: #e9e9e9;
+       }
+       form input[type="email"]:hover{
+        background-color: #e9e9e9;
+       }
+       form input[type="password"]:hover{
+        background-color: #e9e9e9;
+       }
+       form input[type="date"]:hover{
+        background-color: #e9e9e9;
+       }
+       form input[type="number"]:hover{
+        background-color: #e9e9e9;
+       }
+       
+       button{
+         height: 35px;
+         padding: 10px 10px 10px 10px;
+         margin: 35px 0px 15px 60px;
+         display-flex:transparent;
+       }
+       button {
+         height: 75%;
+         width: 75%;
+         border-radius: 5px;
+         border: none;
+         font-size: 25px;
+         font-weight: 500;
+         letter-spacing: 2px;
+         cursor: pointer;
+         transition: all 0.3s ease;
+         background: linear-gradient(135deg, #71b7e6, #9b59b6);
+       }
+       button input:hover{
+         transform: scale(0.99); 
+        background: linear-gradient(-135deg, #71b7e6, #9b59b6);
+        }
+       @media(max-width: 584px){
+       .container{
+        max-width: 100%;
+      }
+      form .user-details .input-box{
+          margin-bottom: 15px;
+          width: 100%;
+        }
+        form .category{
+          width: 100%;
+        }
+       
+        .content form .user-details{
+          max-height: 300px;
+          overflow-y: scroll;
+        }
+        .user-details::-webkit-scrollbar{
+          width: 5px;
+        }
+        }
+        @media(max-width: 459px){
+        .container .content .category{
+          flex-direction: column;
+        }
+      }
+     
+      textarea {
+        width: 300px; /* Set the width of the text area to 300 pixels */
+      }
+      textarea:hover{
+        background-color: #e9e9e9;
+       }
+  
+ 
+    
+    </style>
+<body>
+  <div class="container">
+    <div class="title">Signup For Job Seeker</div>
+    <div class="content">
+
+      <form action="/j_signup" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="user-details">
+        
+          <div class="input-box">
+            <span class="details">JOB SEEKER NAME</span>
+            <input type="text" placeholder="Lname Fname Mname" required name="jobseeker_name">
+          </div>
+        
+          <div class="input-box">
+            <span class="details">EMAIL</span>
+            <input type="email" placeholder="abc123@gmail.com" required name="email">
+          </div>
+
+          <div class="input-box">
+            <span class="details">PHONE NUMBER</span>
+            <input type="number" maxlength=10 placeholder="0000000000" required  oninput="formatQuantity(this)" name="phone_number">
+          </div>
+
+          <div class="input-box">
+            <span class="details">BIRTH DATE</span>
+            <input type="date"  required name="birth_date">
+          </div>
+
+          <div class="input-box">
+            <span class="details">ADDRESS</span>
+            <textarea  placeholder="Enter location" required rows="3" width="150px" name="address"></textarea>
+          </div>
+
+          <div class="input-box">
+            <label for="resume">ADD RESUME (only pdf)</label>
+            <input type="file" id="resume" name="resume" accept=".pdf"> 
+          </div>
+      
+
+          <div class="input-box">
+            <span class="details">USERNAME</span>
+            <input type="text" placeholder="Enter your username" required name="username">
+          </div>
+
+          <div class="input-box">
+            <span class="details">PASSWORD</span>
+            <input type="password" placeholder="Enter your password" required name="password">
+          </div>
+
+          <div class="input-box">
+            <span class="details">CONFIRM PASSWORD</span>
+            <input type="password" placeholder="Confirm your password" required name="c_password">
+          </div>
+        </div>
+
+        <div class="button">
+          <button name="j_s_button" type="submit">Sign up</button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+</body>
+</html>
+
+<script>
+  function formatQuantity(input) {
+    // Remove any non-numeric characters
+    input.value = input.value.replace(/\D/g, '');
+    
+    // Ensure the length is not more than 10 characters
+    if (input.value.length > 10) {
+      input.value = input.value.slice(0, 10);
+    }
+  }
+</script>

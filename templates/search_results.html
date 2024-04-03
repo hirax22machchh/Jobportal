@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+</head>
+{% load static %}
+<style>
+    body {
+        margin: 0;
+        background-color:#D7D8DA ;
+        font-family: Arial, sans-serif;
+    }
+
+    .top-header {
+        top:0;
+        height:40px;
+        width:100%;
+        position: fixed;
+        z-index: 1000;
+        background-color: #124478 ; /* Dark blue */
+        color: #fff;
+        padding: 14px;
+        display: flex;
+        align-items: center;
+    }
+
+    .top-header .container {
+        position:fixed;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding:20px 10px 10px 20px;
+    }
+
+    .logo {
+        color: #ffffff;
+        text-decoration: none;
+        font-size: 24px;
+        margin-left: 70px;
+    }
+
+
+    .box {
+        display: grid;
+        place-items: center;
+        height: 38vh; /* Adjust height as needed */
+    }
+  
+
+   .hello button {
+        background-color: transparent; 
+        color: #5C5C5C;
+        font-size:20px;
+        margin:10px;
+        text-align: center;
+        justify-content:center;
+        padding: 12px 16px;
+        border: solid 3px #124478;
+        border-radius: 20px;
+        outline: none;
+        cursor: pointer;
+    }
+     
+    .hello button:hover {
+        background-color: #0056b3;
+        color: #fff;
+    }
+
+    .user-info {
+        display: flex;
+        align-items: center;
+        margin-right:50px;
+       
+    }
+
+    .user-logo img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right:10px; /* Add margin to separate from the name */
+    }
+
+    .user-name {
+        color: #e2e2e2;
+        font-size: 16px;
+        margin-right:60px;
+      }
+
+    .nav-links {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+    }
+
+    .nav-links li {
+        margin-left: 20px;
+    }
+
+    .nav-links li a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .nav-links li a:hover {
+        text-decoration: underline;
+    }
+    .sidebar {
+      position: fixed;
+      top: 80px;
+      left: -350px; /* Initially hidden */
+      height: 100%;
+      width: 300px;
+      background-color:#BBC8D7 ; /* Dark blue */
+      padding: 30px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      transition: left 0.3s ease-in-out; /* Smooth transition effect */
+      z-index: 1000; /* Ensure sidebar appears above other content */
+  }
+  
+  .sidebar.active {
+      left: 20px; /* Show sidebar */
+  }
+  
+  .sidebar button {
+      margin-bottom: 10px;
+      padding: 10px;
+      width: 100%;
+      background-color: transparent; /* Blue */
+      color: #5E5E5E;
+      border: none;
+      font-size: 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease; /* Smooth transition effect */
+  }
+  
+  .sidebar button:hover {
+      background-color: #0056b3; /* Darker blue on hover */
+      color: #fff;
+  }
+  
+  .toggle-btn {
+    position:fixed;
+    top: 20px;
+    left: 20px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    z-index: 1000; /* Ensure button appears above other content */
+}
+
+.line {
+    display: block;
+    width: 30px;
+    height: 3px;
+    background-color: #fff;
+    margin: 6px auto; /* Adjust the space between lines */
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+.toggle-btn.active .line:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+}
+
+.toggle-btn.active .line:nth-child(2) {
+    opacity: 0;
+}
+
+.toggle-btn.active .line:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+}
+
+    .search-form {
+        margin-top:140px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+    }
+
+    .search-form input[type="text"] {
+        padding: 8px;
+        color:#124478;
+        font-size:16px;
+        border-radius: 20px;
+        border: solid 3px #124478;
+        outline: none;
+        height:30px;
+        width: 300px; /* Adjust width as needed */
+    }
+
+    .search-form button {
+        background-color: transparent; 
+        color: #5C5C5C;
+        font-size:20px;
+        margin:10px;
+        padding: 12px 16px;
+        border: solid 3px #124478;
+        border-radius: 20px;
+        outline: none;
+        cursor: pointer;
+    }
+     
+    .search-form button:hover {
+        background-color: #0056b3;
+        color: #fff;
+    }
+
+    span {
+        margin-left: 20px; /* Add margin to the left of the fetched data */
+    }
+
+    h1 {
+        text-align: center;
+        color:white;
+        background-color: #757575;
+    }
+    .h1-container {
+        width: 50%;
+        background-color:#757575; 
+        margin-left:21%;
+        padding: 10px; 
+        border-radius: 5px; 
+        border: 4px solid #000000;
+        display: flex;
+        justify-content: center; 
+        align-items: center; 
+    }
+    .qualification-box1 {
+        background-color:#C1EEFD ; /* dark blue*/
+        color: #124478; /* White text */
+        padding: 20px 200px 20px 200px;
+        margin:20px 20px 20px 400px;
+        border-radius: 10px;
+        border: 2px solid #000000;
+        margin-top: 10px;
+        width:20%;
+    }
+
+    .box1 {
+        display: grid;
+        place-items: center;
+        height: 10vh; /* Adjust height as needed */
+    }
+  
+
+   .hello1 button {
+        background-color: transparent; 
+        color: #5C5C5C;
+        font-size:15px;
+        margin:2px;
+        text-align: center;
+        justify-content:center;
+        padding: 4px 4px;
+        border: solid 3px #124478;
+        border-radius: 15px;
+        outline: none;
+        cursor: pointer;
+    }
+     
+    .hello1 button:hover {
+        background-color: #0056b3;
+        color: #fff;
+    }
+</style>
+<body>
+    <header class="top-header">
+        <div class="container">
+            <a href="#" class="logo">Job Portal</a>
+            
+            <div class="user-info">
+                <div class="user-logo">
+                    <img src="{% static 'png/user.png' %}" alt="User Logo">
+                </div>
+                <div class="user-name">{{js_name}}</div> <!-- Put your name here -->
+            </div>
+        </div>
+    </header>
+    <button class="toggle-btn" onclick="toggleSidebar()">
+        <span class="line"></span>
+        <span class="line"></span>
+        <span class="line"></span>
+    </button>
+    
+    <form method="POST" action="j_menu">
+        {% csrf_token %}
+    <div class="sidebar">
+      <button type="submit" name="profile" value="profile">Profile</button>
+      <button type="submit" name="qualification" value="qualification">Qualification</button>
+      <button type="submit" name="applied_jobs" value="applied_jobs">Applied Jobs</button>
+      <button type="submit" name="help" value="help">Help</button>
+      <button type="submit" name="aboutus" value="aboutus">About Us</button>
+      <button type="submit" name="logout" value="logout">Logout</button>
+    </div>
+    </form>
+
+    <h1>Search Results</h1>
+    <ul>
+        {% for job in results %}
+            <div class="qualification-box1">
+                <form action="/job/{{ job.jp_id }}/" method="POST">
+                    {% csrf_token %}
+                    <div class="box1">
+                        <div class="hello1">
+                    <button type="submit" name="jobdetails" value="{{ job.jp_id }}">
+                        <p><span></span>{{ job.emp_id.emp_name }}<span></span><p>
+                    </button>
+                </div></div>
+                </form>
+                <p><strong>Designation:</strong> {{ job.designation }}</p>
+                <p><strong>Vacancies:</strong> {{ job.vacancies }}</p>
+                <p><strong>Salary:</strong> {{ job.salary }}{{" "}}<strong>LPA</strong></p>
+                <p><strong>Required Qualification:</strong> {{ job.req_qualification}}</p>
+                <p><strong>Required Experience:</strong> {{ job.req_experience }}<br><br>
+                </div>
+            <br><br>
+        {% endfor %}
+    </ul>
+</body>
+</html>
+<script>
+    function toggleSidebar() {
+        var sidebar = document.querySelector('.sidebar');
+        sidebar.classList.toggle('active');
+    }
+  </script>
